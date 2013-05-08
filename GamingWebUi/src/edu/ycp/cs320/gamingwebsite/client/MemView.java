@@ -58,7 +58,8 @@ public class MemView extends Composite {
 		private Login login;
 		private Label lblNewLabel;
 		private String username;
-		private String password;
+		private Timer timer;
+		private Timer timer2;
 		
 	
 	public MemView(String username) {
@@ -236,7 +237,7 @@ public class MemView extends Composite {
 			
 			setscore(); 
 			
-			new Timer() {
+			timer = new Timer() {
 				@Override
 				public void run() {
 					scorelabl.setValue(score);
@@ -245,7 +246,9 @@ public class MemView extends Composite {
 					pg.setVisible(true);
 					
 				}
-			}.schedule(500);
+			};
+			
+			timer.schedule(500);
 		}
 		else{
 			scorelabl.setVisible(false);
@@ -343,13 +346,14 @@ public class MemView extends Composite {
 				final int hideIndex2 = imgindex2;
 				
 				if(samecards == true){
-					new Timer() {
+					timer2 = new Timer() {
 						@Override
 						public void run() {
 							allImages[hideIndex1].setVisible(false);
 							allImages[hideIndex2].setVisible(false);
 						}
-					}.schedule(500);
+					};
+					timer2.schedule(500);
 					
 					pairsGone++; 		
 					
@@ -372,6 +376,8 @@ public class MemView extends Composite {
 		MainWorld main = new MainWorld(username);
 		layoutPanel_1.clear();
 		layoutPanel_1.add(main);
+		timer.cancel();
+		timer2.cancel();
 		main.update();
 	}
 	

@@ -35,17 +35,17 @@ public class memDeckTest extends TestCase {
 	
 	@Test
 	public void testgetMemDeck(){
-		assertEquals(deck, memdeck.getMemDeck());
+		assertEquals(memdeck.getMemDeck());
 	}
 	
 	@Test
 	public void testmake(){
-	
+		assertTrue(memdeck.make());
 	}
 	
 	@Test
 	public void testgetNumCards() throws Exception {
-		assertEquals(20, memdeck.getNumCards());
+		assertEquals(20, memdeck.getNumCards(), DELTA);
 		
 	}
 	
@@ -56,7 +56,8 @@ public class memDeckTest extends TestCase {
 
 	@Test
 	public void testshuffle(){
-		
+		memdeck.make();
+		assertFalse(memdeck, memdeck.shuffle());
 	
 	}
 	
