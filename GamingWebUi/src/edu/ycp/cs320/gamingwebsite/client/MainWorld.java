@@ -96,6 +96,7 @@ public class MainWorld extends Composite{
 				layoutPanel.add(memview);
 				timer.cancel();
 				memview.update();
+				
 			}
 		});
 		layoutPanel.add(membtn);

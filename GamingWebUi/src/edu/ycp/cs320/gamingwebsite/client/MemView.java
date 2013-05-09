@@ -18,11 +18,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.NumberLabel;
 
-
-
-
 public class MemView extends Composite {
-		private String user;
 		private MemDeck deck;
 		private	ArrayList<String> newdeck; 
 		private double click;
@@ -54,15 +50,11 @@ public class MemView extends Composite {
 		private double score; 
 		private LayoutPanel layoutPanel_1;
 		private Button btnBackToHome;
-		private Label errorLabel;
-		private Login login;
-		private Label lblNewLabel;
 		private String username;
 		private Timer timer;
-		private Timer timer2;
-		
 	
 	public MemView(String username) {
+	
 		this.username = username;
 		layoutPanel_1 = new LayoutPanel();
 		initWidget(layoutPanel_1);
@@ -111,15 +103,11 @@ public class MemView extends Composite {
 		layoutPanel_1.setWidgetLeftWidth(btnBackToHome, 779.0, Unit.PX, 107.0, Unit.PX);
 		layoutPanel_1.setWidgetTopHeight(btnBackToHome, 0.0, Unit.PX, 83.0, Unit.PX);
 		
-		errorLabel = new Label("New label");
+		errorLabel = new Label();
 		layoutPanel_1.add(errorLabel);
 		layoutPanel_1.setWidgetLeftWidth(errorLabel, 23.0, Unit.PX, 56.0, Unit.PX);
 		layoutPanel_1.setWidgetTopHeight(errorLabel, 599.0, Unit.PX, 18.0, Unit.PX);
-		
-		lblNewLabel = new Label(username);
-		layoutPanel_1.add(lblNewLabel);
-		layoutPanel_1.setWidgetLeftWidth(lblNewLabel, 822.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel_1.setWidgetTopHeight(lblNewLabel, 194.0, Unit.PX, 18.0, Unit.PX);
+	
 	}
 	
 	// so that it can remake the deck and reset the game
@@ -247,7 +235,7 @@ public class MemView extends Composite {
 					
 				}
 			};
-			
+
 			timer.schedule(500);
 		}
 		else{
@@ -261,8 +249,8 @@ public class MemView extends Composite {
 	 * putting their file names in a separate array
 	 */
 	public void render(){
-		//make two decks of memcards and store in a new array
-		deck.make();
+		
+		deck.make();													//make two decks of memcards and store in a new array
 		score = 0; 
 		click = 0;
 		pairsGone = 0;
@@ -346,14 +334,14 @@ public class MemView extends Composite {
 				final int hideIndex2 = imgindex2;
 				
 				if(samecards == true){
-					timer2 = new Timer() {
+					timer = new Timer() {
 						@Override
 						public void run() {
 							allImages[hideIndex1].setVisible(false);
 							allImages[hideIndex2].setVisible(false);
 						}
 					};
-					timer2.schedule(500);
+					timer.schedule(500);
 					
 					pairsGone++; 		
 					
@@ -377,7 +365,6 @@ public class MemView extends Composite {
 		layoutPanel_1.clear();
 		layoutPanel_1.add(main);
 		timer.cancel();
-		timer2.cancel();
 		main.update();
 	}
 	
