@@ -3,10 +3,7 @@ package edu.ycp.cs320.gamingwebsite.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-
 import edu.ycp.cs320.gamingwebsite.shared.Login;
-import edu.ycp.cs320.gamingwebsite.shared.User;
-
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.dom.client.Style.Unit;
@@ -23,7 +20,6 @@ public class loginView extends Composite{
 	private LayoutPanel layoutPanel;
 	private MainWorld main; 
 	private PasswordTextBox passwordTextBox;
-	private LayoutPanel layoutPanel_1;
 	private Button btnNewButton;
 	private Button NewUser;
 
@@ -62,9 +58,7 @@ public class loginView extends Composite{
 		layoutPanel.add(usernameTextBox);
 		layoutPanel.setWidgetLeftWidth(usernameTextBox, 219.0, Unit.PX, 173.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(usernameTextBox, 153.0, Unit.PX, 34.0, Unit.PX);
-		
-		
-		
+
 		Label lblGamingWebSite = new Label("Gaming Web Site");
 		lblGamingWebSite.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		lblGamingWebSite.setStyleName("Main Game");
@@ -95,10 +89,9 @@ public class loginView extends Composite{
 		
 		
 	}
-	
+	// find the user and matches 
 	protected void handleLogInClicked() {
 		// RPC call to server to see if username/password is valid
-		
 		RPC.loginService.findLogin(usernameTextBox.getText(), passwordTextBox.getText(), new AsyncCallback<Login>() {
 			
 			@Override
@@ -118,10 +111,9 @@ public class loginView extends Composite{
 			}
 		});
 	}
-	
+	// add a new username and password
 	protected void handleSignInClicked() {
 		// RPC call to server to see if username/password is valid
-		
 		RPC.loginService.addLogin(usernameTextBox.getText(), passwordTextBox.getText(), new AsyncCallback<Login>() {
 
 			@Override
@@ -142,7 +134,7 @@ public class loginView extends Composite{
 			}
 		});
 	}
-	
+	// goes into the mainworld
 	public void	NextPanel(){
 		main = new MainWorld(usernameTextBox.getText());
 		layoutPanel.clear();

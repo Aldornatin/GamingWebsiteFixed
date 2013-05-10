@@ -56,10 +56,11 @@ public class MemView extends Composite {
 	public MemView(String username) {
 	
 		this.username = username;
+		this.score = 0;  
+		
 		layoutPanel_1 = new LayoutPanel();
 		initWidget(layoutPanel_1);
-		login = new Login();
-		this.score = 0;  
+		
 		layoutPanel_1.setSize("1033px", "617px");
 		
 		// winning label to the game.
@@ -78,6 +79,7 @@ public class MemView extends Composite {
 				makeDeck(layoutPanel_1);
 			}
 		});
+		
 		pg.setStyleName("Playagain_button");
 		pg.setText("Play again?");
 		layoutPanel_1.add(pg);
@@ -102,27 +104,18 @@ public class MemView extends Composite {
 		layoutPanel_1.add(btnBackToHome);
 		layoutPanel_1.setWidgetLeftWidth(btnBackToHome, 779.0, Unit.PX, 107.0, Unit.PX);
 		layoutPanel_1.setWidgetTopHeight(btnBackToHome, 0.0, Unit.PX, 83.0, Unit.PX);
-		
-		errorLabel = new Label();
-		layoutPanel_1.add(errorLabel);
-		layoutPanel_1.setWidgetLeftWidth(errorLabel, 23.0, Unit.PX, 56.0, Unit.PX);
-		layoutPanel_1.setWidgetTopHeight(errorLabel, 599.0, Unit.PX, 18.0, Unit.PX);
-	
 	}
 	
-	// so that it can remake the deck and reset the game
-	public void makeDeck(LayoutPanel layoutPanel){
-
-		this.deck = new MemDeck();
-		this.newdeck = new ArrayList<String>(); 
+	
+	public void makeDeck(LayoutPanel layoutPanel){												// so that it can remake the deck and reset the game
+		this.deck = new MemDeck(); 																				
+		this.newdeck = new ArrayList<String>(); 												
 		
-		deck.resetImgShow();
-		// this will initialize all 20 images to the gwt and place them evenally
+		deck.resetImgShow();																	// this will initialize all 20 images to the gwt and place them evenally
 		
-		this.pairsGone = 0;
+		this.pairsGone = 0;									
 		
-		// this will initialize all 20 images to the gwt and place them evenally
-		this.image = new Image();
+		this.image = new Image();																// this will initialize all 20 images to the gwt and place them evenally
 		this.image_1 = new Image();
 		this.image_2 = new Image();
 		this.image_3 = new Image();
@@ -170,10 +163,8 @@ public class MemView extends Composite {
 			Image img = allImages[i];
 			
 			final int imageNum = i;
-			
-			// add click handler to image
-			img.addClickHandler(new ClickHandler() {
-				
+
+			img.addClickHandler(new ClickHandler() {												// add click handler to image		
 				@Override
 				public void onClick(ClickEvent event) {
 					deck.setImgshow(imageNum, 1);
@@ -182,50 +173,40 @@ public class MemView extends Composite {
 				}
 			});
 			
-			// add to panel
-			layoutPanel.add(img);
-			
+			layoutPanel.add(img);																	// add to panel
 			img.setVisible(true);
 			
-			// set position/size
-			int row = i / 5;
+			int row = i / 5;																		// set position/size
 			int col = i % 5;
 			
 			layoutPanel.setWidgetLeftWidth(img, 75.0 + col*125.0, Unit.PX, 100.0, Unit.PX);
 			layoutPanel.setWidgetTopHeight(img, 25.0 + row*175.0, Unit.PX, 200.0, Unit.PX);
 		}
-	
 		render();
-		
 		update();
 	}
-
-
 
 	/**
 	 * This updates the game state based on what the user does
 	 */
 	public void update() {
-		//give each image object the address so it will display
-		for(int i =0 ; i<allImages.length; i++){
-			//if imgshow is 1, it should show an image
-			if(deck.getImgshow().get(i) == 1){
+		
+		for(int i =0 ; i<allImages.length; i++){													//give each image object the address so it will display
+			if(deck.getImgshow().get(i) == 1){														//if imgshow is 1, it should show an image
 				allImages[i].setUrl(newdeck.get(i));
 			}
-			else{//imgshow is 0, so the back card should show
-				allImages[i].setUrl("CardImage/Backcard.jpg");
+			else{
+				allImages[i].setUrl("CardImage/Backcard.jpg");										//imgshow is 0, so the back card should show
 			}
-		
 		}
 		
 		CardsShown();
 		
-		if(IsFinished()){
+		if(IsFinished()){																			// if the game is than create the score and set the score in the database
 			score = (click/2) *100 ;
-			
 			setscore(); 
 			
-			timer = new Timer() {
+			timer = new Timer() {																	// creating a timer to shows the score and button to try again.
 				@Override
 				public void run() {
 					scorelabl.setValue(score);
@@ -314,8 +295,8 @@ public class MemView extends Composite {
 	 * This method determines which cards are showing
 	 */
 	public void CardsShown(){
-		//if they match, set them invisible
-		boolean samecards = false; 
+		
+		boolean samecards = false;													 	//if they match, set them invisible
 		Images img1 = null, img2 = null;
 		int imgindex1 = 0, imgindex2=0;
 		
@@ -347,12 +328,12 @@ public class MemView extends Composite {
 					
 				}
 			}
-			//flip the cards back over	
-			deck.resetImgShow();
+				
+			deck.resetImgShow();														//flip the cards back over
 		}
 	}
 	
-	public boolean IsFinished(){
+	public boolean IsFinished(){														// to see if the game is finished
 		if(pairsGone == (deck.getMemDeck().size()/2)){
 			return true;
 		}
@@ -360,7 +341,7 @@ public class MemView extends Composite {
 			return false; 
 		}
 	}
-	public void goHome(){
+	public void goHome(){																// goes back to the mainworld
 		MainWorld main = new MainWorld(username);
 		layoutPanel_1.clear();
 		layoutPanel_1.add(main);
@@ -368,20 +349,17 @@ public class MemView extends Composite {
 		main.update();
 	}
 	
-	protected void setscore() {
-		// RPC call to server to see if username/password is valid
-		
+	protected void setscore() {															// RPC call to server to see if username/password is valid
 		RPC.loginService.setscore(username, score, new AsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
-				errorLabel.setText("Success (should go to home page)" );
+				System.out.println("Success (should go to home page)" );
 			}
 			
 			@Override
-			public void onFailure(Throwable caught) {
-				//  display error (e.g., in a label)
-				errorLabel.setText("Error logging in (could not contact server)");
+			public void onFailure(Throwable caught) {									//  display error (e.g., in a label)
+				System.out.println("Error logging in (could not contact server)");
 			}
 		});
 	}

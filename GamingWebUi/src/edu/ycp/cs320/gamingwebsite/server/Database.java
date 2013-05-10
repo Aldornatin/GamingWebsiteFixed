@@ -81,7 +81,7 @@ public class Database implements IDatabase{
 			releaseConnection(dbConn);
 		}
 	}
-	
+	// creating the table
 	void createTables() throws SQLException {
 		databaseRun(new ITransaction<Boolean>() {
 			@Override
@@ -109,7 +109,7 @@ public class Database implements IDatabase{
 			}
 		});
 	}
-
+	// getting the login 
 	@Override
 	public List<Login> getLogin() throws SQLException {
 		return databaseRun(new ITransaction<List<Login>>() {
@@ -143,7 +143,7 @@ public class Database implements IDatabase{
 			}
 		});
 	}
-
+	// making sure the two username matches
 	@Override
 	public Login findLogin(final String username, final String password) {	
 		try {
@@ -167,10 +167,9 @@ public class Database implements IDatabase{
 		
 		// TODO "select * from logins where username = ? and password = ?"
 	}
-	
+	// adding the username and password to the login
 	@Override
-	public Login addLogin(final String username, final String password) throws SQLException {
-		
+	public Login addLogin(final String username, final String password) throws SQLException {	
 		try {
 			return databaseRun(new ITransaction<Login>() {
 				@Override
@@ -208,9 +207,7 @@ public class Database implements IDatabase{
 			throw new RuntimeException("SQL exception adding user to database", e);
 		}
 	}
-	
-	// TODO: we need to get the username from the loginView
-	
+	// setting a new memscore
 	public void setscore(final String username, final double score) throws SQLException {
 		databaseRun(new ITransaction<Boolean>() {
 			@Override

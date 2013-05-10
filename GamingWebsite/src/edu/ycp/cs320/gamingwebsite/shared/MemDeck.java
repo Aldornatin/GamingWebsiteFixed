@@ -14,7 +14,6 @@ import java.util.Random;
 public class MemDeck {
 	private ArrayList<Images> memDeck;
 	private ArrayList<Integer> imgshow;
-	//private boolean exposed;
 	/***
 	 * Constructor
 	 */
@@ -25,7 +24,6 @@ public class MemDeck {
 		for (int i = 0; i<20; i++){
 			imgshow.add(0); 
 		}
-		
 	}
 	/**
 	 * @return the memdeck
@@ -114,8 +112,8 @@ public class MemDeck {
 	 * @param card2: The second card to compare.
 	 * @return true: Returns true if cards are equal, false if otherwise.
 	 */
-	public boolean isSame(Images card1, Images card2){
 	
+	public boolean isSame(Images card1, Images card2){
 		if(card1.equals(card2)){
             return true;
 		}
@@ -145,10 +143,10 @@ public class MemDeck {
 	/**
 	 * Turns all elements in imgshow back to zeros.
 	 */
+	
 	public void resetImgShow(){
 		for (int i = 0; i < memDeck.size(); i++){
 			imgshow.set(i, 0); 
 		}
-
 	}
 }

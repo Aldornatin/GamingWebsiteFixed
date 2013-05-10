@@ -57,25 +57,21 @@ public class MainWorld extends Composite{
 		this.dx = 0;
 		this.dy = 0;
 
-		memview = new MemView(username);
+		memview = new MemView(username);										
 		
-		MAX_KEYS = 256;
-		keys = new boolean[MAX_KEYS];
+		MAX_KEYS = 256;															// the amount of keys used on a keyboard
+		keys = new boolean[MAX_KEYS];											// which keys are being pressed
 		canvas = Canvas.createIfSupported();
 	
-		if (canvas == null) {
+		if (canvas == null) {													// see if the canvas works on the brower
 			return;
 		}
 
-		layoutPanel = new LayoutPanel();
+		layoutPanel = new LayoutPanel();										// creates layoutpanel
 		initWidget(layoutPanel);
 		layoutPanel.setSize("1174px", "918px");
 
-
-
-
-		// Use a FocusPanel to allow the canvas to process user input events
-		FocusPanel focusPanel = new FocusPanel();
+		FocusPanel focusPanel = new FocusPanel();								// Use a FocusPanel to allow the canvas to process user input events
 		layoutPanel.add(focusPanel);
 
 		layoutPanel.setWidgetLeftWidth(focusPanel, 0.0, Unit.PX, 960.0, Unit.PX);
@@ -87,10 +83,10 @@ public class MainWorld extends Composite{
 		canvas.setCoordinateSpaceHeight(height);
 		canvas.setFocus(true);
 		
-		focusPanel.add(canvas);
+		focusPanel.add(canvas);													// to be able to use the keys
 		
 		membtn = new Button("Enter the Memory Game");
-		membtn.addClickHandler(new ClickHandler() {
+		membtn.addClickHandler(new ClickHandler() {								// goes into the memory game
 			public void onClick(ClickEvent event) {
 				layoutPanel.clear();
 				layoutPanel.add(memview);
@@ -103,7 +99,7 @@ public class MainWorld extends Composite{
 		layoutPanel.setWidgetLeftWidth(membtn, 890.0, Unit.PX, 117.0, Unit.PX);
 		layoutPanel.setWidgetTopHeight(membtn, 153.0, Unit.PX, 64.0, Unit.PX);
 		
-		scoresbtn = new Button("Enter Score Table");
+		scoresbtn = new Button("Enter Score Table");							// goes into highscores
 		scoresbtn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 			}
@@ -114,7 +110,7 @@ public class MainWorld extends Composite{
 		
 		
 
-		canvas.addKeyDownHandler(new KeyDownHandler(){
+		canvas.addKeyDownHandler(new KeyDownHandler(){							// key is down 
 			public void onKeyDown(KeyDownEvent event) {
 				int key = event.getNativeKeyCode();
 				if(key < MAX_KEYS) {
@@ -124,8 +120,8 @@ public class MainWorld extends Composite{
 			}
 		});
 
-		// the key is up
-		canvas.addKeyUpHandler(new KeyUpHandler() {
+		
+		canvas.addKeyUpHandler(new KeyUpHandler() {								// the key is up
 			public void onKeyUp(KeyUpEvent event) {
 				int key = event.getNativeKeyCode();
 				if(key < MAX_KEYS) {
@@ -134,9 +130,9 @@ public class MainWorld extends Composite{
 			}
 		});
 
-		player = new Player();
+		player = new Player();													
 		
-		timer = new Timer(){
+		timer = new Timer(){													// updating the mainworld
 			@Override
 			public void run(){
 				update();
@@ -151,7 +147,7 @@ public class MainWorld extends Composite{
 		
 	}
 
-	public void render(){
+	public void render(){																	// drawing the objects
 		context = canvas.getContext2d();
 		context.beginPath();
 		
@@ -172,20 +168,17 @@ public class MainWorld extends Composite{
 		double x = player.getX();
 		double y = player.getY();
 
-		// w
-		if(keys[87]) {
+		
+		if(keys[87]) {									// w
 			dy = -1;
 		}
-		// d
-		if(keys[68]) {
+		if(keys[68]) {									// d
 			dx = 1;
 		}
-		//a
-		if(keys[65]) {
+		if(keys[65]) {									//a
 			dx = -1;
-		}
-		//s
-		if(keys[83]) {
+		}	
+		if(keys[83]) {									//s
 			dy = 1;
 		}
 
@@ -193,9 +186,9 @@ public class MainWorld extends Composite{
 		x += dx;
 		y += dy;
 		
-		player.collision(x, y, dx, dy);
-		if (player.getcontact()){
-		membtn.setVisible(true);
+		player.collision(x, y, dx, dy);					// creating the collisions
+		if (player.getcontact()){						// going into the room		
+			membtn.setVisible(true);
 		}
 		else{
 			membtn.setVisible(false);
