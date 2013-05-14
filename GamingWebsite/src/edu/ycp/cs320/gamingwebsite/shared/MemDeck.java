@@ -12,8 +12,10 @@ import java.util.Random;
  */
 
 public class MemDeck {
+	
 	private ArrayList<Images> memDeck;
 	private ArrayList<Integer> imgshow;
+
 	/***
 	 * Constructor
 	 */
